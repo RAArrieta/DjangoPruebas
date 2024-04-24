@@ -1,0 +1,81 @@
+1 - CREAMOS LA APLICACION
+(.venv) PS E:\Documentos\Alfre\DjangoPruebas\project> django-admin startapp producto
+OPCION 2
+(.venv) PS E:\Documentos\Alfre\DjangoPruebas\project> python manage.py startapp producto
+
+2 - DEBEMOS REGISTRAR LA APP EN CONFIG SETTINGS
+INSTALLED_APPS = [
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+    'cliente'
+]
+
+3 - CREAMOS LOS MODELOS
+from django.db import models
+
+class Categoria(models.Model):
+
+    nombre = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.nombre
+
+class Producto(models.Model):
+    nombre = models.CharField(max_length=50)
+    precio = models.FloatField()
+    categoria_id = models.ForeignKey(Categoria, on_delete=models.SET_NULL, null=True)
+
+    def __str__(self):
+        return f"{self.nombre} {self.precio}"
+
+4 - CHEQUEAMOS SI LO CREAMOS CORRECTAMENTE
+(.venv) PS E:\Documentos\Alfre\DjangoPruebas\project> python manage.py check producto
+
+5 - CREAMOS LAS MIGRACIONES (ARCHIVOS PYTHON ENCARGADOS DE LA BASE DE DATOS)
+(.venv) PS J:\Django\Proyecto\project> python manage.py makemigrations
+
+6 - EJECUTAMOS LAS MIGRACIONES  PARA QUE REALICEN LOS CAMBIOS EN LA BASE DE DATOS
+(.venv) PS J:\Django\Proyecto\project> python manage.py migrate
+
+7 - CREAMOS UN SUPER USUARIO POR UNICA VEZ
+(.venv) PS J:\Django\Proyecto\project> python manage.py createsuperuser
+usuario: admin
+contraseña: 123
+
+8 - EN LA APP ADMIN TENGO QUE TRAER LOS MODELOS Y LOS REGISTRO
+from django.contrib import admin
+from . import models
+
+admin.site.register(models.Categoria)
+admin.site.register(models.Producto)
+
+9 - VIEWS DE PRODUCTO
+from django.shortcuts import render
+from . import models
+
+def home(request):
+    consulta_producto = models.Producto.objects.all()
+    context = {"productos": consulta_producto}
+    return render(request,"producto/index.html", context)
+
+10 - URLS DE PRODUCTO
+from django.urls import path
+from . import views
+
+urlpatterns = [
+    path('', views.home, name = "home"),
+]
+
+11 - URLS DE CONFIG
+from django.contrib import admin
+from django.urls import path, include
+from . import views
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('producto/', include("producto.urls")),
+]
