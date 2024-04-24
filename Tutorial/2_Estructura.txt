@@ -1,0 +1,17 @@
+1 - EN CONFIG CREAMOS EL ARCHIVO views.py. ESTE CONTROLA
+
+IMPORTAMOS UNA CLASE DE DJANGO PARA GENERAR UNA RESPUESTA
+from django.http import HttpResponse
+
+def saludo(request):
+	return HttpResponse ("Hola Mundo!!...")
+
+2 - INDICAMOS LA URL DE SALUDO 
+from django.contrib import admin
+from django.urls import path
+from . import views
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('saludo/', views.saludo),
+]
