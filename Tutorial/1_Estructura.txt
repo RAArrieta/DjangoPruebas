@@ -1,0 +1,16 @@
+1 - CREAMOS EL ENTORNO VIRTUAL
+E:\Documentos\Alfre\DjangoPruebas> python -m venv .venv
+
+INGRESAMOS
+PS E:\Documentos\Alfre\DjangoPruebas> .\.venv\Scripts\activate
+
+2 - INSTALAMOS DJANGO EN EL ENTORNO VIRTUAL
+(.venv) PS E:\Documentos\Alfre\DjangoPruebas> pip install django
+
+3 - CREAMOS UNA CARPETA PARA EL PROYECTO Y EN EL INSTALAMOS
+(.venv) PS E:\Documentos\Alfre\DjangoPruebas> mkdir project
+(.venv) PS E:\Documentos\Alfre\DjangoPruebas\project> django-admin startproject config .
+
+4 - PODEMOS VER EL PROYECTO CREADO
+(.venv) PS E:\Documentos\Alfre\DjangoPruebas\project> python manage.py runserver
+
